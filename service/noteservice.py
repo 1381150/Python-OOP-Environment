@@ -8,28 +8,34 @@ from modeles.writer import Writer
 from repository.store import Store
 
 class NoteService:
-    def __init__(self, note_repository):
-        self.note_repository = note_repository
 
-    def create_note(self, title, content):
-        note = {
-            'title': title,
-            'content': content
-        }
-        return self.note_repository.save(note)
+    note_id = 0
 
-    def get_note_by_id(self, note_id):
-        return self.note_repository.find_by_id(note_id)
+    def __init__(self):
+        self.store = Store()
+    
+    def addNewNote(self, title):
+        self.note_id += 1
+        note = Note(title, self.note_id)
+        self.store.add_note(note) 
 
-    def update_note(self, note_id, title=None, content=None):
-        note = self.note_repository.find_by_id(note_id)
-        if not note:
-            return None
-        if title:
-            note['title'] = title
-        if content:
-            note['content'] = content
-        return self.note_repository.update(note)
+    def deleteNote(self, note_id):
+        note_to_delete = None
+        for note in self.store.get_notes():
+            if note.id == note_id:
+                note_to_delete = note
+                break
+        if note_to_delete:
+            self.store.remove_note(note_to_delete)
+        else:
+            raise Exception(f"Note with ID {note_id} not found.") 
 
-    def delete_note(self, note_id):
-        return self.note_repository.delete(note_id)
+    def getNotebyId(self, note_id):
+        for note in self.store.get_notes():
+            if note.id == note_id:
+                return note
+        raise Exception(f"Note with ID {note_id} not found.")
+
+    def editNote(self, note_id, text):
+        note = self.getNotebyId(note_id)
+        note.edit(text)

@@ -35,3 +35,6 @@ class NoteController:
 
     def print_links(self):
         self.graph.print_links()
+
+    def getNoteById(self, note_id):
+        return self.note_service.getNotebyId(note_id)

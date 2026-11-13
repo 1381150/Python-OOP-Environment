@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 
-from models.note import Note
+from models.note import note
 from service.noteservice import NoteService
 from models.graph import Graph
 from models.writer import Writer

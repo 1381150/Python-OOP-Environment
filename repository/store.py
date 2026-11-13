@@ -15,5 +15,5 @@ class Store:
     def get_notes(self):
         return self.notes
 
-    def removeNote(self, note: Note):
+    def remove_note(self, note: Note):
         self.notes.remove(note)

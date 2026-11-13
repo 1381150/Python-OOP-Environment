@@ -42,6 +42,6 @@ class NoteService:
 
     def searchNotebyTitle(self, title):
         for note in self.store.get_notes():
-            if note.title == title:
+            if note.title.lower() == title.lower():
                 return note
         raise Exception(f"Note with title '{title}' not found.")

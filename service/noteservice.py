@@ -39,3 +39,9 @@ class NoteService:
     def editNote(self, note_id, text):
         note = self.getNotebyId(note_id)
         note.edit(text)
+
+    def searchNotebyTitle(self, title):
+        for note in self.store.get_notes():
+            if note.title == title:
+                return note
+        raise Exception(f"Note with title '{title}' not found.")
